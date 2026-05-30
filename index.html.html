@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>普通人AI学习路径测评 | 三十七岁的AI自习室</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;background:#f5f5f3;min-height:100vh;display:flex;justify-content:center;padding:2rem 1rem}
+.card{background:#fff;border-radius:16px;padding:2rem 1.75rem;max-width:520px;width:100%;box-shadow:0 1px 4px rgba(0,0,0,0.08);align-self:flex-start}
+.header{text-align:center;margin-bottom:1.5rem}
+.header h1{font-size:18px;font-weight:600;color:#1a1a1a;margin-bottom:6px}
+.header p{font-size:13px;color:#888}
+.prog-bar{height:3px;background:#e8e8e8;border-radius:2px;margin-bottom:1.75rem}
+.prog-fill{height:3px;background:#1D9E75;border-radius:2px;transition:width 0.4s}
+.q-num{font-size:12px;color:#aaa;margin-bottom:6px}
+.q-title{font-size:17px;font-weight:500;color:#1a1a1a;margin-bottom:1.25rem;line-height:1.5}
+.options{display:flex;flex-direction:column;gap:8px;margin-bottom:1.5rem}
+.opt{display:flex;align-items:center;gap:12px;padding:13px 14px;border:1px solid #e8e8e8;border-radius:12px;cursor:pointer;transition:all 0.15s;background:#fff}
+.opt:hover{border-color:#1D9E75;background:#f0fbf7}
+.opt.sel{border:2px solid #1D9E75;background:#f0fbf7}
+.opt-l{width:26px;height:26px;border-radius:50%;border:1px solid #ddd;display:flex;align-items:center;justify-content:center;font-size:12px;color:#999;flex-shrink:0}
+.opt.sel .opt-l{background:#1D9E75;border-color:#1D9E75;color:#fff}
+.opt-t{font-size:14px;color:#1a1a1a}
+.nav{display:flex;align-items:center;justify-content:space-between}
+.nav-mid{font-size:13px;color:#aaa}
+.btn-p{padding:10px 16px;background:transparent;border:1px solid #ddd;border-radius:8px;font-size:14px;color:#888;cursor:pointer}
+.btn-p:disabled{opacity:0.3;cursor:not-allowed}
+.btn-n{padding:10px 22px;background:#1D9E75;color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:500;cursor:pointer;transition:opacity 0.15s}
+.btn-n:disabled{opacity:0.3;cursor:not-allowed}
+.btn-n:not(:disabled):hover{opacity:0.88}
+.r-hero{padding:1.5rem;border-radius:14px;border:1px solid #e8e8e8;background:#fff;margin-bottom:1rem}
+.r-badge{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:8px;font-size:12px;font-weight:500;margin-bottom:14px}
+.r-title{font-size:20px;font-weight:600;color:#1a1a1a;margin-bottom:10px;line-height:1.4}
+.r-desc{font-size:14px;color:#666;line-height:1.75}
+.sec-label{font-size:11px;color:#bbb;font-weight:500;letter-spacing:0.5px;margin:1.25rem 0 0.75rem;text-transform:uppercase}
+.roadmap{display:flex;flex-direction:column;margin-bottom:0.5rem}
+.ri{display:flex;gap:14px}
+.ri-left{display:flex;flex-direction:column;align-items:center;width:38px;flex-shrink:0}
+.ri-dot{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;flex-shrink:0;border:1px solid transparent}
+.ri-dot-here{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:500;flex-shrink:0;border:2px solid #1D9E75;background:#1D9E75;color:#fff;box-shadow:0 0 0 4px #E1F5EE}
+.ri-line{width:1.5px;flex:1;min-height:8px;margin:3px 0}
+.ri-body{padding:0 0 14px 0;flex:1}
+.ri-body-here{padding:0 0 14px 0;flex:1;padding-top:2px}
+.ri-tag{display:inline-block;padding:2px 7px;border-radius:6px;font-size:10px;font-weight:500;margin-bottom:3px}
+.ri-name{font-size:13px;font-weight:500;color:#1a1a1a;margin-bottom:2px}
+.ri-sub{font-size:12px;color:#888;line-height:1.5}
+.here-card{border:1.5px solid #1D9E75;border-radius:12px;padding:12px 14px;background:#fff;margin-bottom:14px}
+.here-top{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.here-badge{display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:6px;font-size:11px;font-weight:500;background:#E1F5EE;color:#0F6E56}
+.here-pin{display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:6px;font-size:11px;font-weight:500;background:#1D9E75;color:#fff}
+.here-name{font-size:15px;font-weight:500;color:#1a1a1a;margin-bottom:4px}
+.here-sub{font-size:13px;color:#666;line-height:1.55}
+.plan-grid{display:flex;flex-direction:column;gap:10px;margin-bottom:1rem}
+.week-card{border:1px solid #e8e8e8;border-radius:12px;overflow:hidden;background:#fff}
+.week-head{padding:10px 14px;background:#f7f7f5;border-bottom:1px solid #e8e8e8;display:flex;align-items:center;gap:8px}
+.week-num{width:20px;height:20px;border-radius:50%;background:#1D9E75;color:#fff;font-size:11px;font-weight:500;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.week-head-t{font-size:13px;font-weight:500;color:#1a1a1a}
+.week-body{padding:12px 14px;display:flex;flex-direction:column;gap:10px}
+.day{display:flex;gap:10px;align-items:flex-start}
+.day-dot{width:6px;height:6px;border-radius:50%;background:#1D9E75;flex-shrink:0;margin-top:5px}
+.day-meta{margin-bottom:2px}
+.day-num-tag{font-size:11px;color:#aaa;background:#f0f0ee;padding:1px 6px;border-radius:4px}
+.day-t{font-size:13px;font-weight:500;color:#1a1a1a;margin-bottom:1px}
+.day-s{font-size:12px;color:#888;line-height:1.55}
+.footer-card{padding:1.25rem;border-radius:12px;border:1px solid #e8e8e8;background:#f7f7f5;text-align:center;margin-top:1rem}
+.footer-card p{font-size:13px;color:#888;line-height:1.7}
+.footer-card strong{color:#333;font-weight:500}
+.restart-btn{width:100%;padding:11px;background:transparent;border:1px solid #ddd;border-radius:12px;font-size:14px;color:#888;cursor:pointer;margin-top:10px}
+.restart-btn:hover{background:#f7f7f5}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="header">
+    <h1>普通人AI学习路径测评</h1>
+    <p>回答7个问题，找到适合你的起点和30天行动计划</p>
+  </div>
+  <div class="prog-bar"><div class="prog-fill" id="prog" style="width:14%"></div></div>
+  <div id="main"></div>
+</div>
+
+<script>
+var Qs = [
+  {id:"goal", label:"第 1 题", title:"你学AI最想解决的问题是？", opts:[
+    {l:"A", t:"提高工作效率，省时省力", v:"efficiency"},
+    {l:"B", t:"做副业或接单赚钱", v:"money"},
+    {l:"C", t:"找到新方向或转型", v:"transition"},
+    {l:"D", t:"怕被时代抛下，先了解再说", v:"fear"}
+  ]},
+  {id:"time", label:"第 2 题", title:"你现在的时间状态是？", opts:[
+    {l:"A", t:"在职，每天只有1小时以内", v:"low"},
+    {l:"B", t:"在职，每天能挤出1-2小时", v:"mid"},
+    {l:"C", t:"全职在家或已离职，时间较充裕", v:"high"},
+    {l:"D", t:"自由职业，时间弹性", v:"flex"}
+  ]},
+  {id:"exp", label:"第 3 题", title:"你用过AI工具吗？", opts:[
+    {l:"A", t:"完全没用过", v:"none"},
+    {l:"B", t:"用过但不知道怎么高效用", v:"little"},
+    {l:"C", t:"经常用1-2个，想系统学", v:"medium"},
+    {l:"D", t:"用过不少，现在想找变现方向", v:"high"}
+  ]},
+  {id:"bg", label:"第 4 题", title:"你有积累的领域是？", opts:[
+    {l:"A", t:"文字写作、内容、运营", v:"content"},
+    {l:"B", t:"图片、设计、视觉", v:"design"},
+    {l:"C", t:"销售、商业、管理", v:"biz"},
+    {l:"D", t:"技术、数据、分析", v:"tech"}
+  ]},
+  {id:"horizon", label:"第 5 题", title:"你希望多久看到效果？", opts:[
+    {l:"A", t:"1个月内，越快越好", v:"fast"},
+    {l:"B", t:"1-3个月，打好基础", v:"mid"},
+    {l:"C", t:"3个月以上，系统学", v:"long"},
+    {l:"D", t:"没想好，先动起来再说", v:"open"}
+  ]},
+  {id:"block", label:"第 6 题", title:"你觉得自己最大的障碍是？", opts:[
+    {l:"A", t:"不知道从哪开始", v:"start"},
+    {l:"B", t:"容易三分钟热度", v:"persist"},
+    {l:"C", t:"看不懂英文或操作有门槛", v:"barrier"},
+    {l:"D", t:"不知道怎么变现", v:"monetize"}
+  ]},
+  {id:"income", label:"第 7 题", title:"你对AI的收入期待是？", opts:[
+    {l:"A", t:"暂时不想变现，先提升自己", v:"none"},
+    {l:"B", t:"每月多赚几千块", v:"side"},
+    {l:"C", t:"每月1-3万，成为主要收入", v:"main"},
+    {l:"D", t:"做IP或课程，不设上限", v:"big"}
+  ]}
+];
+
+var LAYERS = [
+  {tag:"必须", tc:"#0F6E56", bc:"#E1F5EE", lc:"#9FE1CB", name:"第一层：搞懂AI能干什么", sub:"推荐：吴恩达AI课，免费，中文字幕，不讲代码"},
+  {tag:"必须", tc:"#0F6E56", bc:"#E1F5EE", lc:"#9FE1CB", name:"第二层：用顺一个工具", sub:"入门：豆包 / DeepSeek（国内直接用）<br>进阶：GPT / Claude（需解决网络问题）"},
+  {tag:"可选", tc:"#534AB7", bc:"#EEEDFE", lc:"#CECBF6", name:"第三层：自动化工作流", sub:"用扣子等平台搭建智能体，替代重复性工作<br>适合想自动化的人，不是所有人必经路"},
+  {tag:"选学", tc:"#854F0B", bc:"#FAEEDA", lc:"#FAC775", name:"Vibe Coding（新兴）", sub:"说话让AI写程序，不用自己写代码<br>需要能清晰描述你想做什么产品"},
+  {tag:"进阶", tc:"#5F5E5A", bc:"#F1EFE8", lc:"#D3D1C7", name:"第四层：Python编程", sub:"想开发AI产品卖给别人才需要，普通人跳过"},
+  {tag:"进阶", tc:"#5F5E5A", bc:"#F1EFE8", lc:"#D3D1C7", name:"第五层：AI底层原理", sub:"研究AI怎么运作的，开车不需要懂发动机"}
+];
+
+var PLANS = {
+  beginner: {
+    badge:"完全小白起步", bc:"#E1F5EE", bt:"#0F6E56", here:0,
+    title:"先搞懂AI能干什么，别急着学工具",
+    desc:"很多人一开始就研究提示词技巧，结果越学越懵。你现在最重要的事是建立基本认知，AI能做什么、不能做什么，再决定学哪个工具。",
+    plan:[
+      {week:"建立认知（第一层）", days:[
+        {d:"Day 1-2", t:"看吴恩达AI课", s:"免费，有中文字幕，不讲代码，先看前3节建立概念"},
+        {d:"Day 3-4", t:"注册豆包或DeepSeek", s:"国内直接用，无需解决网络问题，先把账号跑通"},
+        {d:"Day 5-7", t:"用AI做一件今天就要做的事", s:"写一封邮件、整理一份清单，感受它能帮你做什么"}
+      ]},
+      {week:"用顺一个工具（第二层）", days:[
+        {d:"Day 8-10", t:"每天给AI布置一个真实任务", s:"不用完美，先跑通，积累10个使用记录"},
+        {d:"Day 11-14", t:"找到你的第一个固定使用场景", s:"从你最熟悉的工作内容切入，效果最快"}
+      ]},
+      {week:"探索方向", days:[
+        {d:"Day 15-21", t:"研究3个已经在用AI赚钱的人", s:"在抖音/小红书搜AI接单，看他们做什么、用什么工具"}
+      ]},
+      {week:"做出第一个作品", days:[
+        {d:"Day 22-28", t:"用AI完成一个能发布的小东西", s:"一篇文章、一张图、一份方案，哪怕不完美先发出去"},
+        {d:"Day 29-30", t:"复盘这30天", s:"记录：学了什么、用了什么、下一步想做什么"}
+      ]}
+    ]
+  },
+  toolUser: {
+    badge:"工具使用期", bc:"#FAEEDA", bt:"#854F0B", here:1,
+    title:"停止收藏，把一个工具用到极致",
+    desc:"你不缺工具，缺的是把一个工具真正用顺的经历。建议先删掉90%的收藏，只留一个工具，连续用30天，用到觉得会了为止。",
+    plan:[
+      {week:"选定工具，深入用", days:[
+        {d:"Day 1-3", t:"选定GPT或Claude，只用这一个", s:"减少选择焦虑，专注用顺一个"},
+        {d:"Day 4-7", t:"把你每天重复做的3件事用AI做一遍", s:"写报告、整理会议、回邮件，找到你的高频场景"}
+      ]},
+      {week:"打磨提示词", days:[
+        {d:"Day 8-10", t:"针对你的场景写3个固定提示词", s:"能反复用的模板，才是真正属于你的工具"},
+        {d:"Day 11-14", t:"AI初稿通常有70分，练习人工润色", s:"找到你和AI配合的节奏，效率提升最快"}
+      ]},
+      {week:"扩展到新场景", days:[
+        {d:"Day 15-21", t:"把AI用法迁移到第二个工作场景", s:"内容创作、客户沟通、方案整理，选一个新的试"}
+      ]},
+      {week:"积累可展示的案例", days:[
+        {d:"Day 22-28", t:"整理3-5个用AI解决真实问题的案例", s:"这是你最有价值的内容，也是接单的基础素材"},
+        {d:"Day 29-30", t:"评估：哪个场景最值得继续深挖", s:"下一个30天从这里出发"}
+      ]}
+    ]
+  },
+  monetizer: {
+    badge:"副业变现路线", bc:"#E6F1FB", bt:"#185FA5", here:1,
+    title:"你适合走副业变现路线",
+    desc:"先把一个已有技能用AI放大，再找到愿意付费的人。不需要从零开始，你的经验就是起点。先用国内工具把基本功打好，再考虑海外工具。",
+    plan:[
+      {week:"搞清楚你能卖什么", days:[
+        {d:"Day 1-2", t:"下载豆包，注册DeepSeek", s:"两个都免费，国内网络直接用，先把这两个入门"},
+        {d:"Day 3-5", t:"用AI做第一个真实作品", s:"结合你的背景，让AI帮你写方案、生成框架、整理报告"},
+        {d:"Day 6-7", t:"问自己：身边有没有人愿意付钱", s:"哪怕100元，这就是起点"}
+      ]},
+      {week:"打磨可交付的成果", days:[
+        {d:"Day 8-10", t:"把作品改三遍，练习人工润色", s:"AI初稿通常有70分，剩下30分靠你的判断和修改"},
+        {d:"Day 11-12", t:"可选：注册Claude或GPT", s:"如果国内工具在你的场景里不够用，现在可以考虑"},
+        {d:"Day 13-14", t:"写一个服务介绍", s:"你能帮谁做什么、交付什么成果、大概多长时间"}
+      ]},
+      {week:"找第一单", days:[
+        {d:"Day 15-16", t:"从身边人开始，找第一个真实需求", s:"不用上平台，从朋友、同事、前同事里找"},
+        {d:"Day 17-19", t:"完成第一次交付，哪怕免费", s:"拿到真实反馈比收钱更重要"},
+        {d:"Day 20-21", t:"把交付过程记录成SOP", s:"写下：用了哪些工具、哪些提示词、花了多少时间"}
+      ]},
+      {week:"准备复制", days:[
+        {d:"Day 22-25", t:"接第二单，这次要收费", s:"哪怕100-300元，付费关系会让双方都更认真"},
+        {d:"Day 26-28", t:"优化工具组合，建立自己的工作流", s:"回顾30天，哪些工具真正帮你出过活"},
+        {d:"Day 29-30", t:"写第一个月变现复盘", s:"记录：收了多少钱、花了多少时间、下一步想做什么"}
+      ]}
+    ]
+  },
+  transition: {
+    badge:"转型探索期", bc:"#EEEDFE", bt:"#534AB7", here:0,
+    title:"先找到你的应用场景，再谈学什么",
+    desc:"你不是不会学，是不知道为什么而学。建议从你现有的工作或生活场景出发，找到AI能帮你解决的一个具体问题，然后倒推需要学什么工具。",
+    plan:[
+      {week:"找到你的场景", days:[
+        {d:"Day 1-3", t:"列出你每天重复做的3件事", s:"这3件事就是AI最能帮你的地方"},
+        {d:"Day 4-7", t:"用AI把其中一件事做一遍", s:"不用完美，先跑通流程，感受差距在哪"}
+      ]},
+      {week:"从场景倒推工具", days:[
+        {d:"Day 8-14", t:"根据你的场景选定1个工具深入用", s:"内容场景选Claude，效率场景选豆包"}
+      ]},
+      {week:"研究同类型的人怎么用AI", days:[
+        {d:"Day 15-21", t:"在抖音/小红书搜你的行业+AI", s:"看和你背景相似的人，用AI在做什么、怎么变现的"}
+      ]},
+      {week:"做出一个方向决策", days:[
+        {d:"Day 22-28", t:"用AI完成一个和你转型方向相关的作品", s:"哪怕只是一份策划、一篇文章，先有东西在手"},
+        {d:"Day 29-30", t:"确定下一个30天的主攻方向", s:"不要同时做三件事，选一个最有把握的先跑通"}
+      ]}
+    ]
+  }
+};
+
+var ans = {}, cur = 0;
+
+function getResult() {
+  var exp = ans.exp, goal = ans.goal, block = ans.block, income = ans.income;
+  if (exp === "none" || (exp === "little" && block === "start")) return PLANS.beginner;
+  if (income === "main" || income === "big" || goal === "money" || block === "monetize") return PLANS.monetizer;
+  if (goal === "transition") return PLANS.transition;
+  return PLANS.toolUser;
+}
+
+function renderQ() {
+  var q = Qs[cur];
+  document.getElementById("prog").style.width = ((cur + 1) / Qs.length * 100) + "%";
+  var sel = ans[q.id];
+  var optsHTML = "";
+  for (var i = 0; i < q.opts.length; i++) {
+    var o = q.opts[i];
+    optsHTML += '<div class="opt' + (sel === o.v ? " sel" : "") + '" onclick="pick(\'' + q.id + '\',\'' + o.v + '\')">';
+    optsHTML += '<div class="opt-l">' + o.l + '</div>';
+    optsHTML += '<div class="opt-t">' + o.t + '</div></div>';
+  }
+  document.getElementById("main").innerHTML =
+    '<p class="q-num">' + q.label + '</p>' +
+    '<p class="q-title">' + q.title + '</p>' +
+    '<div class="options">' + optsHTML + '</div>' +
+    '<div class="nav">' +
+    '<button class="btn-p"' + (cur === 0 ? " disabled" : "") + ' onclick="goPrev()">← 上一题</button>' +
+    '<span class="nav-mid">' + (cur + 1) + ' / ' + Qs.length + '</span>' +
+    '<button class="btn-n"' + (sel ? "" : " disabled") + ' onclick="goNext()">' + (cur === Qs.length - 1 ? "查看我的方案 →" : "下一题 →") + '</button>' +
+    '</div>';
+}
+
+function pick(id, v) { ans[id] = v; renderQ(); }
+function goPrev() { if (cur > 0) { cur--; renderQ(); } }
+function goNext() {
+  if (!ans[Qs[cur].id]) return;
+  if (cur < Qs.length - 1) { cur++; renderQ(); }
+  else showResult();
+}
+
+function showResult() {
+  document.getElementById("prog").style.width = "100%";
+  var r = getResult();
+
+  var roadHTML = "";
+  for (var i = 0; i < LAYERS.length; i++) {
+    var l = LAYERS[i];
+    var isHere = i === r.here;
+    var isLast = i === LAYERS.length - 1;
+    roadHTML += '<div class="ri">';
+    roadHTML += '<div class="ri-left">';
+    if (isHere) {
+      roadHTML += '<div class="ri-dot-here">' + (i + 1) + '</div>';
+    } else {
+      roadHTML += '<div class="ri-dot" style="background:' + l.bc + ';color:' + l.tc + ';border-color:' + l.lc + '">' + (i + 1) + '</div>';
+    }
+    if (!isLast) roadHTML += '<div class="ri-line" style="background:' + l.lc + '"></div>';
+    roadHTML += '</div>';
+    if (isHere) {
+      roadHTML += '<div class="ri-body-here"><div class="here-card">';
+      roadHTML += '<div class="here-top">';
+      roadHTML += '<span class="here-badge">' + l.tag + '</span>';
+      roadHTML += '<span class="here-pin">&#x25CF; 你在这里</span>';
+      roadHTML += '</div>';
+      roadHTML += '<div class="here-name">' + l.name + '</div>';
+      roadHTML += '<div class="here-sub">' + l.sub + '</div>';
+      roadHTML += '</div></div>';
+    } else {
+      roadHTML += '<div class="ri-body">';
+      roadHTML += '<span class="ri-tag" style="background:' + l.bc + ';color:' + l.tc + '">' + l.tag + '</span>';
+      roadHTML += '<div class="ri-name">' + l.name + '</div>';
+      roadHTML += '<div class="ri-sub">' + l.sub + '</div>';
+      roadHTML += '</div>';
+    }
+    roadHTML += '</div>';
+  }
+
+  var planHTML = "";
+  for (var w = 0; w < r.plan.length; w++) {
+    var wk = r.plan[w];
+    planHTML += '<div class="week-card">';
+    planHTML += '<div class="week-head"><div class="week-num">' + (w + 1) + '</div><div class="week-head-t">' + wk.week + '</div></div>';
+    planHTML += '<div class="week-body">';
+    for (var d = 0; d < wk.days.length; d++) {
+      var dy = wk.days[d];
+      planHTML += '<div class="day"><div class="day-dot"></div><div>';
+      planHTML += '<div class="day-meta"><span class="day-num-tag">' + dy.d + '</span></div>';
+      planHTML += '<div class="day-t">' + dy.t + '</div>';
+      planHTML += '<div class="day-s">' + dy.s + '</div>';
+      planHTML += '</div></div>';
+    }
+    planHTML += '</div></div>';
+  }
+
+  document.getElementById("main").innerHTML =
+    '<div class="r-hero">' +
+    '<span class="r-badge" style="background:' + r.bc + ';color:' + r.bt + '">' + r.badge + '</span>' +
+    '<div class="r-title">' + r.title + '</div>' +
+    '<div class="r-desc">' + r.desc + '</div></div>' +
+    '<p class="sec-label">你当前在路线图的位置</p>' +
+    '<div class="roadmap">' + roadHTML + '</div>' +
+    '<p class="sec-label">你的30天行动计划</p>' +
+    '<div class="plan-grid">' + planHTML + '</div>' +
+    '<div class="footer-card"><p>关注抖音 <strong>三十七岁的AI自习室</strong><br>每隔一天更新AI学习记录，从0开始，全程真实</p></div>' +
+    '<button class="restart-btn" onclick="restart()">重新测评</button>';
+}
+
+function restart() { ans = {}; cur = 0; document.getElementById("prog").style.width = "14%"; renderQ(); }
+renderQ();
+</script>
+</body>
+</html>
